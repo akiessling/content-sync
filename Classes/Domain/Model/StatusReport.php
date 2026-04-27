@@ -15,7 +15,7 @@ namespace B13\ContentSync\Domain\Model;
 class StatusReport
 {
     protected ?Job $job;
-    protected Configuration $configuration;
+    protected ?Configuration $configuration;
     protected bool $configurationIsValid = false;
     protected string $configurationError = '';
 

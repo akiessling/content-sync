@@ -30,7 +30,7 @@ class RunnerCommand extends Command
         ProcessRunner $processRunner,
         JobRepository $jobRepository,
         ConfigurationValidator $validator,
-        string $name = null
+        ?string $name = null
     ) {
         parent::__construct($name);
         $this->processRunner = $processRunner;

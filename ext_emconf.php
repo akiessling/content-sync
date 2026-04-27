@@ -1,6 +1,6 @@
 <?php
 
-$EM_CONF[$_EXTKEY] = [
+$EM_CONF['content_sync'] = [
     'title' => 'Content Sync',
     'description' => 'Sync Database Tables and Files between two TYPO3 Installations',
     'category' => 'misc',
@@ -13,7 +13,7 @@ $EM_CONF[$_EXTKEY] = [
     'clearCacheOnLoad' => true,
     'version' => '1.0.2',
     'constraints' => [
-        'depends' => ['typo3' => '10.4.0-10.4.99'],
+        'depends' => ['typo3' => '12.4.0-13.4.99'],
         'conflicts' => [],
         'suggests' => [],
     ],

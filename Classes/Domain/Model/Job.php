@@ -27,8 +27,8 @@ class Job
 
     protected int $status = self::STATUS_WAITING;
     protected Configuration $configuration;
-    protected \DateTime $startTime;
-    protected \DateTime $endTime;
+    protected ?\DateTime $startTime;
+    protected ?\DateTime $endTime;
     protected \DateTime $createdTime;
     protected string $error = '';
     protected int $uid;

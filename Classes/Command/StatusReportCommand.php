@@ -23,7 +23,7 @@ class StatusReportCommand extends Command
 {
     protected StatusReportFactory $statusReportFactory;
 
-    public function __construct(StatusReportFactory $statusReportFactory, string $name = null)
+    public function __construct(StatusReportFactory $statusReportFactory, ?string $name = null)
     {
         parent::__construct($name);
         $this->statusReportFactory = $statusReportFactory;

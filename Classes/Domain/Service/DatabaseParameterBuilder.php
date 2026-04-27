@@ -29,7 +29,7 @@ class DatabaseParameterBuilder implements SingletonInterface
         $this->connection = $connectionPool->getConnectionByName(self::DATABASE_CONNECTION_NAME);
     }
 
-    public function buildTablesExclude(Configuration $configuration)
+    public function buildTablesExclude(Configuration $configuration): string
     {
         $excludeTables = [];
         if (!empty($configuration->getDatabaseTables())) {
@@ -46,6 +46,10 @@ class DatabaseParameterBuilder implements SingletonInterface
         return '-e ' . implode(' -e ', $excludeTables);
     }
 
+    /**
+     * @param array<int, string> $tables
+     * @return array<int, string>
+     */
     protected function getMatchedTables(array $tables): array
     {
         return (new TableMatcher())->match($this->connection, ...$tables);
@@ -54,8 +58,8 @@ class DatabaseParameterBuilder implements SingletonInterface
     protected function getAllTables(): array
     {
         if ((new Typo3Version())->getMajorVersion() > 12) {
-            return $this->connection->createSchemaManager()->listTableNames();
-        }
+        return $this->connection->createSchemaManager()->listTableNames();
+    }
         return $this->connection->getSchemaManager()->listTableNames();
 
     }

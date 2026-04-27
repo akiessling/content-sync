@@ -23,7 +23,7 @@ class CollectGarbageCommand extends Command
 
     public function __construct(
         JobRepository $jobRepository,
-        string $name = null
+        ?string $name = null
     ) {
         parent::__construct($name);
         $this->jobRepository = $jobRepository;
