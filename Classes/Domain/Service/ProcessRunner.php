@@ -76,7 +76,7 @@ class ProcessRunner implements SingletonInterface
 
     protected function exec(string $cmd): void
     {
-        $process = Process::fromShellCommandline($cmd);
+        $process = Process::fromShellCommandline($cmd, timeout: null);
         $process->run();
         if (!$process->isSuccessful()) {
             throw new Exception('cannot exec command ' . $cmd . ' with error ' . $process->getErrorOutput(), 1600757440);
