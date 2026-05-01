@@ -49,9 +49,9 @@ class JobController implements SingletonInterface
         if (!$this->checkAccess()) {
             return (new Response())->withStatus(403);
         }
-        $configuration = (new Configuration())->fromExtensionConfiguration($this->extensionConfiguration->get('content_sync'));
         $view = $this->getFluidTemplateObject('Create');
         try {
+            $configuration = (new Configuration())->fromExtensionConfiguration($this->extensionConfiguration->get('content_sync'));
             $this->validator->assertValid($configuration);
             $job = new Job();
             $job->setConfiguration($configuration);

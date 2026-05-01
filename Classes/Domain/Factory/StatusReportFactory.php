@@ -39,8 +39,9 @@ class StatusReportFactory implements SingletonInterface
     public function build(): StatusReport
     {
         $job = $this->jobRepository->findOneLast();
-        $configuration = (new Configuration())->fromExtensionConfiguration($this->extensionConfiguration->get('content_sync'));
+        $configuration = null;
         try {
+            $configuration = (new Configuration())->fromExtensionConfiguration($this->extensionConfiguration->get('content_sync'));
             $this->configurationValidator->assertValid($configuration);
             $configurationIsValid = true;
             $configurationError = '';

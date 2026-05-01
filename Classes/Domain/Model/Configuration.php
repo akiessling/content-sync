@@ -12,6 +12,7 @@ namespace B13\ContentSync\Domain\Model;
  * of the License, or any later version.
  */
 
+use B13\ContentSync\Exception;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class Configuration
@@ -22,11 +23,36 @@ class Configuration
     protected Node $targetNode;
     protected Node $sourceNode;
 
-    public function fromExtensionConfiguration(array $extensionConfiguration): Configuration
+    public function fromExtensionConfiguration(?array $extensionConfiguration): Configuration
     {
-        $this->databaseTables = GeneralUtility::trimExplode(',', $extensionConfiguration['configuration']['databaseTables'], true);
-        $this->excludeDatabaseTables = GeneralUtility::trimExplode(',', $extensionConfiguration['configuration']['excludeDatabaseTables'], true);
-        $this->syncFiles = GeneralUtility::trimExplode(',', $extensionConfiguration['configuration']['syncFiles'], true);
+        if ($extensionConfiguration === null) {
+            throw new Exception('content_sync extension configuration is missing', 1600765845);
+        }
+        if (!isset($extensionConfiguration['configuration']) || !is_array($extensionConfiguration['configuration'])) {
+            throw new Exception('content_sync extension configuration section is missing', 1600765846);
+        }
+        if (!isset($extensionConfiguration['targetNode']) || !is_array($extensionConfiguration['targetNode'])) {
+            throw new Exception('content_sync target node configuration is missing', 1600765847);
+        }
+        if (!isset($extensionConfiguration['sourceNode']) || !is_array($extensionConfiguration['sourceNode'])) {
+            throw new Exception('content_sync source node configuration is missing', 1600765848);
+        }
+        foreach (['databaseTables', 'excludeDatabaseTables', 'syncFiles'] as $key) {
+            if (!array_key_exists($key, $extensionConfiguration['configuration'])) {
+                throw new Exception('content_sync configuration value "' . $key . '" is missing', 1600765849);
+            }
+        }
+        foreach (['targetNode', 'sourceNode'] as $nodeKey) {
+            foreach (['local', 'connection', 'basePath', 'bin'] as $key) {
+                if (!array_key_exists($key, $extensionConfiguration[$nodeKey])) {
+                    throw new Exception('content_sync ' . $nodeKey . ' configuration value "' . $key . '" is missing', 1600765850);
+                }
+            }
+        }
+
+        $this->databaseTables = GeneralUtility::trimExplode(',', (string)$extensionConfiguration['configuration']['databaseTables'], true);
+        $this->excludeDatabaseTables = GeneralUtility::trimExplode(',', (string)$extensionConfiguration['configuration']['excludeDatabaseTables'], true);
+        $this->syncFiles = GeneralUtility::trimExplode(',', (string)$extensionConfiguration['configuration']['syncFiles'], true);
         $this->targetNode = (new Node())->fromArray($extensionConfiguration['targetNode']);
         $this->sourceNode = (new Node())->fromArray($extensionConfiguration['sourceNode']);
         return $this;
