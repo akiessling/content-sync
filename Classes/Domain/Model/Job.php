@@ -113,9 +113,9 @@ class Job
     {
         $serializer = new JsonSerializer();
         $this->configuration = $serializer->unserialize($databaseRow['json_configuration']);
-        $this->startTime = $databaseRow['start_time'] > 0 ? new \DateTime('@' . $databaseRow['start_time']) : null;
-        $this->endTime = $databaseRow['end_time'] > 0 ? new \DateTime('@' . $databaseRow['end_time']) : null;
-        $this->createdTime = new \DateTime('@' . $databaseRow['created_time']);
+        $this->startTime = $databaseRow['start_time'] > 0 ? (new \DateTime())->setTimestamp((int)$databaseRow['start_time']) : null;
+        $this->endTime = $databaseRow['end_time'] > 0 ? (new \DateTime())->setTimestamp((int)$databaseRow['end_time']) : null;
+        $this->createdTime = (new \DateTime())->setTimestamp((int)$databaseRow['created_time']);
         $this->error = (string)$databaseRow['error'];
         $this->uid = (int)$databaseRow['uid'];
         $this->status = (int)$databaseRow['status'];

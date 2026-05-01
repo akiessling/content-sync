@@ -7,7 +7,7 @@
                 <source>Content Sync</source>
             </trans-unit>
             <trans-unit id="statusReport.date-format">
-                <source>m/d/Y h:i:s</source>
+                <source>m/d/Y H:i:s</source>
             </trans-unit>
             <trans-unit id="statusReport.seconds">
                 <source>Seconds</source>
